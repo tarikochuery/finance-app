@@ -14,8 +14,7 @@ function App() {
         <Route path='/login' component={Login} />
         <Route path='/sign' component={SignIn} />
       </Switch>
-    </Router>
-    
+    </Router>    
   );
 }
 
