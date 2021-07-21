@@ -14,10 +14,10 @@
 }
 
 .login-form{
-    height: 196px;
+    height: 400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 25px;
 }
 

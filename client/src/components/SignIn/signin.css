@@ -1,0 +1,6 @@
+.signin-form{
+    height: 196px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

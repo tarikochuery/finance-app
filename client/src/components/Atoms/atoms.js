@@ -39,16 +39,27 @@ export const NextBtn = ({children}) => {
     )
 }
 
-export const InputField = ({type, children}) => {
+export const InputField = ({type, children, max}) => {
     const [input, setInput] = useState('')
     const handleChange = (event) =>{
-        setInput(event.target.value)
+            setInput(event.target.value)
     }
 
-    return(
-        <div className='input'>
-            <label>{children}</label>
-            <input type={type} value={input} onChange={handleChange} />
-        </div>
-    )
+    if(max){
+        return(
+            <div className='input'>
+                <label>{children}</label>
+                <input type={type} value={input} onChange={handleChange} maxLength={max}/>
+            </div>
+        )
+
+    } else {
+        return(
+            <div className='input'>
+                <label>{children}</label>
+                <input type={type} value={input} onChange={handleChange}/>
+            </div>
+        )
+    }
+
 }
