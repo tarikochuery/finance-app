@@ -31,6 +31,14 @@ export const ContinueBtn = ({children, kind, route}) => {
     )
 }
 
+export const NextBtn = ({children}) => {
+    return(                    
+        <button type='submit' className={`continue-btn next`}>
+            <span>{children}</span> <img src='assets/images/white-arrow.svg' /> 
+        </button>        
+    )
+}
+
 export const InputField = ({type, children}) => {
     const [input, setInput] = useState('')
     const handleChange = (event) =>{

@@ -4,7 +4,7 @@ import { ContinueBtn, Icon } from '../Atoms/atoms';
 
 const Home = () => {
     return(
-        <div id='home'>
+        <div id='home' className='content'>
 
             <Icon kind='start' image='assets/images/logo.svg' />
 

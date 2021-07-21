@@ -5,10 +5,9 @@
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(to left, #67E799, #4AD07E);
-    height: 100%
 }
 
-hgroup{
+#home hgroup{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -18,19 +17,19 @@ hgroup{
     margin-bottom: auto;
 }
 
-h1, h2{
+#home h1, h2{
     font-family: 'Poppins', sans-serif;
     line-height: 25.2px;
 
 }
 
-h1{
+#home h1{
     color: #FFFFFF;
     font-size: 30px;
     font-weight: 700;
 }
 
-h2{
+#home h2{
     color: rgba(43, 157, 87, 1);
     font-size: 20px;
     font-weight: 600;
