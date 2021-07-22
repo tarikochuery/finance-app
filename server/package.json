@@ -1,6 +1,12 @@
 {
-  "name": "server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT"
+   "name": "server",
+   "version": "1.0.0",
+   "main": "src/index.js",
+   "license": "Apache-2.0",
+   "dependencies": {
+      "express": "^4.17.1",
+      "reflect-metadata": "^0.1.10",
+      "typeorm": "0.2.34",
+      "pg": "^8.4.0"
+   }
 }
