@@ -5,8 +5,14 @@
    "license": "Apache-2.0",
    "dependencies": {
       "express": "^4.17.1",
+      "pg": "^8.4.0",
       "reflect-metadata": "^0.1.10",
-      "typeorm": "0.2.34",
-      "pg": "^8.4.0"
+      "typeorm": "0.2.34"
+   },
+   "scripts": {
+      "server": "node src/index.js"
+   },
+   "devDependencies": {
+      "nodemon": "^2.0.12"
    }
 }
