@@ -1,0 +1,29 @@
+#dash{
+    background-color: #F6F7FB;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 21px ;
+}
+
+#dash header{
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#dash ul li .list-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 291px;
+    padding: 16px 59px 16px 15px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    color: rgba(93, 135, 168, 1);
+}

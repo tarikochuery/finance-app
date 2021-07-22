@@ -1,11 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import './style.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 export const Icon = ({image, kind}) => {
     return(
         <div className={`icon ${kind}`}>
-            <img src={image} />
+            <img src={image} alt=''/>
+        </div>
+    )
+}
+
+export const IconBtn = ({image, kind}) => {
+    return(
+        <div className={`icon-btn ${kind}`}>
+            <img src={image} alt='' />
         </div>
     )
 }
@@ -17,14 +25,14 @@ export const ContinueBtn = ({children, kind, route}) => {
         if (kind === 'next') {
             setSrc('assets/images/white-arrow.svg')
         }
-    },[src])
+    },[src, kind])
 
 
     return(
         <div style={{width:'296px'}}>
             <Link to={route} style={{textDecoration: 'none'}}>
                 <div className={`continue-btn ${kind}`}>
-                    <span>{children}</span> <img src={src} /> 
+                    <span>{children}</span> <img src={src} alt=''/> 
                 </div>
             </Link>
         </div>
@@ -34,32 +42,51 @@ export const ContinueBtn = ({children, kind, route}) => {
 export const NextBtn = ({children}) => {
     return(                    
         <button type='submit' className={`continue-btn next`}>
-            <span>{children}</span> <img src='assets/images/white-arrow.svg' /> 
+            <span>{children}</span> <img src='assets/images/white-arrow.svg' alt=''/> 
         </button>        
     )
 }
 
-export const InputField = ({type, children, max}) => {
-    const [input, setInput] = useState('')
-    const handleChange = (event) =>{
-            setInput(event.target.value)
-    }
-
-    if(max){
+export const InputField = ({type, children, max, required, onChange, value}) => {
+    if(max && required){
         return(
             <div className='input'>
                 <label>{children}</label>
-                <input type={type} value={input} onChange={handleChange} maxLength={max}/>
+                <input type={type} value={value} required onChange={onChange} maxLength={max}/>
             </div>
         )
 
+    } else if(max){
+        return(
+            <div className='input'>
+                <label>{children}</label>
+                <input type={type} value={value} onChange={onChange} maxLength={max}/>
+            </div>
+        )
+    } else if(required) {
+        return(
+            <div className='input'>
+                <label>{children}</label>
+                <input type={type} value={value} onChange={onChange} required/>
+            </div>
+        )
     } else {
         return(
             <div className='input'>
                 <label>{children}</label>
-                <input type={type} value={input} onChange={handleChange}/>
+                <input type={type} value={value} onChange={onChange}/>
             </div>
         )
     }
 
+}
+
+export const BackButton = () => {
+    const history = useHistory()
+
+    return(
+        <button onClick={() => history.goBack()} className='back-btn'>
+            <img src='/assets/images/back-arrow.svg' alt=''/>
+        </button>
+    )
 }
