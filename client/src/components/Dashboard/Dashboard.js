@@ -10,8 +10,9 @@ const Dashboard = () => {
     <div id='dash' className='content'>
         <header>
             <BackButton />
-            <spam>Olá, usuário!</spam>
+            <p>Olá, usuário!</p>
         </header>
+        <div className='wrapper'>
             <Icon kind='flag' image='/assets/images/flag.svg'/>
             <h2>Selecione seu Objetivo</h2>
             <ul type='none'>
@@ -22,6 +23,7 @@ const Dashboard = () => {
                     </Link>
                 </li>
             </ul>
+        </div>
     </div>
     )
 }

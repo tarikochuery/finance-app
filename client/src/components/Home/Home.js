@@ -13,9 +13,11 @@ const Home = () => {
                 <h2>Controle suas finanças e cumpra suas metas</h2>
             </hgroup>
 
-            <ContinueBtn route='/login' kind='start'>
-                Começar
-            </ContinueBtn>
+            <div>
+                <ContinueBtn route='/login' kind='start'>
+                    Começar
+                </ContinueBtn>
+            </div>
             
 
         </div>

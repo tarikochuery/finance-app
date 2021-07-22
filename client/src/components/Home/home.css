@@ -5,14 +5,15 @@
     display: flex;
     flex-direction: column;
     background-image: linear-gradient(to left, #67E799, #4AD07E);
+    height: 100%;
 }
 
 #home hgroup{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 228px;
-    height: 103px;
+    max-width: 228px;
+    height: 120px;
     margin-top: 26px;
     margin-bottom: auto;
 }
@@ -33,4 +34,9 @@
     color: rgba(43, 157, 87, 1);
     font-size: 20px;
     font-weight: 600;
+    margin-top: 10px;
+}
+
+#home div{
+    margin-top: 10px;
 }

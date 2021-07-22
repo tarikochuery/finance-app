@@ -10,17 +10,17 @@ import Dashboard from './Dashboard/Dashboard';
 function App() {
   const [token, setToken] = useState()
 
-  if(!token){
-    return(
-      <Router>
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route path='/login' component={Login} />
-        <Route path='/sign' component={SignIn} />
-      </Switch>
-    </Router> 
-    )
-  }
+  // if(!token){
+  //   return(
+  //     <Router>
+  //     <Switch>
+  //       <Route path='/login' component={Login} />
+  //       <Route path='/sign' component={SignIn} />
+  //       <Route path='/' component={Home} />
+  //     </Switch>
+  //   </Router> 
+  //   )
+  // }
 
   return (
     <Router>

@@ -16,6 +16,7 @@ const Login = () => {
     }
 
     const handleSubmit = (e) => {
+        e.preventDefault()
         console.log([email, password])
         // Enviar dados colocados pelo user para o server
         
@@ -25,23 +26,25 @@ const Login = () => {
 
     return(
         <div className='content' id='login'>
-            <Icon image='assets/images/user.svg' kind='login' />
-            <h2>Login</h2>
+            <div className='wrapper'>
+                <Icon image='assets/images/user.svg' kind='login' />
+                <h2>Login</h2>
 
-            <form className='login-form' onSubmit={handleSubmit}>
-                <InputField type='email' required={true} value={email} onChange={handleChangeEmail}>
-                    Email
-                </InputField>
-                <InputField type='password' required={true} value={password} onChange={handleChangePsw}>
-                    Senha
-                </InputField>
-                <NextBtn>
-                    Continuar
-                </NextBtn>
-            </form>
-            <p>Ainda não tem uma conta? <Link to='/sign' 
-            style={{color: '#4CCC81', textDecoration: 'underline'}}
-            >Cadastre-se</Link> </p>
+                <form className='login-form' onSubmit={handleSubmit}>
+                    <InputField type='email' required={true} value={email} onChange={handleChangeEmail}>
+                        Email
+                    </InputField>
+                    <InputField type='password' required={true} value={password} onChange={handleChangePsw}>
+                        Senha
+                    </InputField>
+                    <NextBtn>
+                        Continuar
+                    </NextBtn>
+                </form>
+                <p>Ainda não tem uma conta? <Link to='/sign' 
+                style={{color: '#4CCC81', textDecoration: 'underline'}}
+                >Cadastre-se</Link> </p>
+            </div>
         </div>
     )
 }

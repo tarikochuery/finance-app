@@ -29,7 +29,7 @@ export const ContinueBtn = ({children, kind, route}) => {
 
 
     return(
-        <div style={{width:'296px'}}>
+        <div style={{maxWidth:'296px'}}>
             <Link to={route} style={{textDecoration: 'none'}}>
                 <div className={`continue-btn ${kind}`}>
                     <span>{children}</span> <img src={src} alt=''/> 
