@@ -3,7 +3,7 @@ import './signin.css'
 import { Icon, InputField, NextBtn } from '../Atoms/atoms';
 import { Link } from 'react-router-dom';
 
-const SignIn = () => {
+const SignIn = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
@@ -22,6 +22,7 @@ const SignIn = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        props.history.push('/login')
         console.log({username, email, password})
         // Enviar dados para servidor
 

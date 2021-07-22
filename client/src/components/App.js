@@ -26,8 +26,16 @@ function App() {
     <Router>
       <Switch>
         <Route exact path='/' component={Home} />
-        <Route path='/login' component={Login} />
-        <Route path='/sign' component={SignIn} />
+        <Route 
+        path='/login' 
+        render={props => (
+          <Login {...props} />
+        )}/>
+        <Route 
+        path='/sign' 
+        render={(props) => (
+          <SignIn {...props} />
+        )} />
         <Route path='/dash/:id' component={Dashboard} />
       </Switch>
     </Router>    
