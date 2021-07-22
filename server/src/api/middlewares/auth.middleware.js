@@ -1,5 +1,5 @@
 const Express = require("express");
-const userController = require("./user.controller");
+const controllers = require("../controllers");
 
 /**
  * 
@@ -14,7 +14,7 @@ async function register(req, res, next) {
         password
     } = req.body;
 
-    const wroteData = await userController.register(username, email, password);
+    const wroteData = await controllers.user.register(username, email, password);
 
     res.send(wroteData)
 }
