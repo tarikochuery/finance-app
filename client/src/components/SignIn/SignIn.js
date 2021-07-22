@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './signin.css'
 import { Icon, InputField, NextBtn } from '../Atoms/atoms';
 import { Link } from 'react-router-dom';
+import api from '../../services/api';
+import Modal from '../Modal/Modal';
 
 const SignIn = (props) => {
     const [username, setUsername] = useState('')
@@ -22,8 +24,15 @@ const SignIn = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        props.history.push('/login')
-        console.log({username, email, password})
+        api.post('/v1/auth/register'
+        ,{username, email, password}
+        ).then((res) => {
+            console.log(res)
+            sessionStorage.setItem('token', res.data.id)
+            console.log(sessionStorage.getItem('token'))
+        })
+        // props.history.push('/login')
+        // console.log({username, email, password})
         // Enviar dados para servidor
 
         // Receber dados e enviar resposta para user
@@ -52,6 +61,10 @@ const SignIn = (props) => {
                                                             textDecoration: 'underline'}}
                 >Iniciar Sessão</Link></p>
             </div>
+            <Modal show={true} title='Cadastro Efetuado com Sucesso'>
+                <p>Parabéns! Você acabou de efetuar seu cadastro!</p>
+                <p>Clique no botão abaixo para seguir pra área de login.</p>
+            </Modal>
         </div>
     )
 }

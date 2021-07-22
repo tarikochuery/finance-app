@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './login.css'
 import {Icon, InputField, NextBtn} from '../Atoms/atoms'
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+import api from '../../services/api';
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
@@ -18,7 +18,7 @@ const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.history.push('/dash/1')
-        console.log([email, password])
+        console.log({email, password})
         // Enviar dados colocados pelo user para o server
         
 
