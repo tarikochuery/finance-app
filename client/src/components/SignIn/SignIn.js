@@ -9,6 +9,7 @@ const SignIn = (props) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
+    const [modalShow, setModalShow] = useState(false)
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value)
@@ -28,8 +29,11 @@ const SignIn = (props) => {
         ,{username, email, password}
         ).then((res) => {
             console.log(res)
-            sessionStorage.setItem('token', res.data.id)
-            console.log(sessionStorage.getItem('token'))
+            if( res.status === 201) {
+                setModalShow(true)
+            } else {
+                alert('Ops! Parece que ocorreu um erro! Tente Novamente.')
+            }
         })
         // props.history.push('/login')
         // console.log({username, email, password})
@@ -61,7 +65,7 @@ const SignIn = (props) => {
                                                             textDecoration: 'underline'}}
                 >Iniciar Sessão</Link></p>
             </div>
-            <Modal show={true} title='Cadastro Efetuado com Sucesso'>
+            <Modal show={modalShow} title='Cadastro Efetuado com Sucesso'>
                 <p>Parabéns! Você acabou de efetuar seu cadastro!</p>
                 <p>Clique no botão abaixo para seguir pra área de login.</p>
             </Modal>
