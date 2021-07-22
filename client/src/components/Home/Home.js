@@ -1,19 +1,25 @@
 import React from 'react';
 import './home.css'
-import { InputField, ContinueBtn, Icon } from '../Atoms/atoms';
+import { ContinueBtn, Icon } from '../Atoms/atoms';
 
 const Home = () => {
     return(
-        <div id='home' style={{backgroundImage: 'linear-gradient(to left, #67E799, #4AD07E)',
-                                height: '100%' }}>
-            <h1>Home</h1>
-            <ContinueBtn route='/login' kind='start'>
-                Começar
-            </ContinueBtn>
-            <Icon image='/assets/images/logo.svg' kind='start'/>
-            <InputField type='email' >
-                Email
-            </InputField>
+        <div id='home' className='content'>
+
+            <Icon kind='start' image='assets/images/logo.svg' />
+
+            <hgroup>
+                <h1>Safeflow</h1>
+                <h2>Controle suas finanças e cumpra suas metas</h2>
+            </hgroup>
+
+            <div>
+                <ContinueBtn route='/login' kind='start'>
+                    Começar
+                </ContinueBtn>
+            </div>
+            
+
         </div>
     )
 }

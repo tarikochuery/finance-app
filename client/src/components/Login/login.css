@@ -1,0 +1,41 @@
+#login{
+    background-color: rgba(246, 247, 251, 1);
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login .wrapper{
+    max-height: 500px;
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 12px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#login h2{
+    margin: 10px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+.login-form{
+    height: 200px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-bottom: 25px;
+}
+
+#login > div > p{
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 19.2px;
+    font-weight: 400;
+    color: rgba(93, 135, 168, 1);
+    text-align: center;
+}
