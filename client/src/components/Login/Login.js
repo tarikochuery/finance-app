@@ -30,9 +30,8 @@ const Login = (props) => {
                 handleSuccessfulAuth(res)
                 localStorage.setItem('token', res.access_token)
                 localStorage.setItem('username', res.username)
-                const token = localStorage.getItem('token')
-                api.defaults.Authorization = `bearer ${token}`
                 props.history.push(`/dash/${res.username}`)
+                console.log(api.defaults.Authorization)
             }
         }).catch(err => console.error(err))
 

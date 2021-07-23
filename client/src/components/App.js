@@ -14,17 +14,23 @@ function App() {
   const [Loading, setLoading] = useState(true)
   const [username, setUsername] = useState()
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    const username = localStorage.getItem('username')
-    if(token && username){
-      setIsAuth(true)
-    }
-    setLoading(false)
-  },[])
+  const sendAuthtoApp = (auth) => {
+    setIsAuth(auth)
+    console.log(isAuth)
+  }
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token')
+  //   const username = localStorage.getItem('username')
+  //   console.log('Vindo do App',token, username)
+  //   if(token && username){
+  //     setIsAuth(true)
+  //   }
+  //   setLoading(false)
+  // },[])
 
   return (
-    <AuthProvider>
+    <AuthProvider sendAuthtoApp={sendAuthtoApp}>
       <Router>
           <Switch>
             <Route exact path='/' component={Home} />
