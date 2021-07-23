@@ -19,8 +19,23 @@ async function register(req, res, next) {
         updated_at: wroteData.updated_at
     })
 }
+
+/**
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ * @param {Express.NextFunction} next 
+ */
+async function login(req, res, next) {
+    const { email } = req.body
+
+    const user = await controllers.user.getBy.email(email)
+
+    const body = controllers.auth.generateToken({id: user.id}, 86400)
+
+    res.status(201).send(body)
 }
 
 module.exports = {
     register,
+    login
 }
