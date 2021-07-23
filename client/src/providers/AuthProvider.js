@@ -1,4 +1,5 @@
 import React, {createContext, useEffect, useState} from 'react'
+import Loading from '../components/Loading/Loading'
 import api from '../services/api'
 
 const Context = createContext()
@@ -13,7 +14,6 @@ function AuthProvider({children, sendAuthtoApp}) {
     const isLoggedIn = () =>{
         const token = localStorage.getItem('token')
         const user = localStorage.getItem('username')
-        console.log('Vindo do AuthProvider', token, user)
         if(token && user){
             setIsAuth(true)
             setUsername(user)
@@ -28,9 +28,13 @@ function AuthProvider({children, sendAuthtoApp}) {
     }
     
     const handleSuccessfulAuth = (data) =>{
-        console.log(data)
         setIsAuth(true)
         setUsername(data.username)
+    }
+
+    const handleSuccessfulLogout = () => {
+        localStorage.removeItem('token')
+        setIsAuth(false)
     }
     
     useEffect(() => {
@@ -40,11 +44,11 @@ function AuthProvider({children, sendAuthtoApp}) {
     },[isAuth])
     
     if(loading){
-        return <h1>Loading...</h1>
+        return <Loading/>
     } else {
         return (
             <Context.Provider 
-            value={{isAuth, username, handleSuccessfulAuth}}>
+            value={{isAuth, username, handleSuccessfulAuth, handleSuccessfulLogout}}>
                 {children}
             </Context.Provider>
         )

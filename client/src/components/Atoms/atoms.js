@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import './style.css'
 import { Link, useHistory } from 'react-router-dom'
+import { Context } from '../../providers/AuthProvider'
 
 export const Icon = ({image, kind}) => {
     return(
@@ -47,29 +48,15 @@ export const NextBtn = ({children}) => {
     )
 }
 
-export const InputField = ({type, children, max, required, onChange, value}) => {
-    if(max && required){
+export const InputField = ({type, children, max, required, onChange, value, min}) => {
+    if(required){
         return(
             <div className='input'>
                 <label>{children}</label>
-                <input type={type} value={value} required onChange={onChange} maxLength={max}/>
+                <input type={type} value={value} required onChange={onChange} maxLength={max} minLength={min}/>
             </div>
         )
 
-    } else if(max){
-        return(
-            <div className='input'>
-                <label>{children}</label>
-                <input type={type} value={value} onChange={onChange} maxLength={max}/>
-            </div>
-        )
-    } else if(required) {
-        return(
-            <div className='input'>
-                <label>{children}</label>
-                <input type={type} value={value} onChange={onChange} required/>
-            </div>
-        )
     } else {
         return(
             <div className='input'>
@@ -81,12 +68,28 @@ export const InputField = ({type, children, max, required, onChange, value}) => 
 
 }
 
-export const BackButton = () => {
+export const HeaderBtn = ({type}) => {
+    const {handleSuccessfulLogout} = useContext(Context)
     const history = useHistory()
+    
+    const back = () => {history.goBack()}
+
+    const logout = () => {
+        handleSuccessfulLogout()
+        history.push('/login')
+    }
+
+    const btnConfig =[
+        {type: 'goBack', action: back, img: '/assets/images/back-arrow.svg'},
+        {type: 'logout', action: logout, img: '/assets/images/logout.svg'}
+    ] 
+    
+    const [btnSelected] = btnConfig.filter((btn) => btn.type === type )
+    
 
     return(
-        <button onClick={() => history.goBack()} className='back-btn'>
-            <img src='/assets/images/back-arrow.svg' alt=''/>
+        <button onClick={btnSelected.action} className={`header-btn ${type}`}>
+            <img src={btnSelected.img} alt=''/>
         </button>
     )
 }

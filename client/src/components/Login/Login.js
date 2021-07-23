@@ -4,12 +4,14 @@ import {Icon, InputField, NextBtn} from '../Atoms/atoms'
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import { Context } from '../../providers/AuthProvider';
+import Loading from '../Loading/Loading'
 
 const Login = (props) => {
     const {isAuth, handleSuccessfulAuth, username} = useContext(Context)
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
     const[loading, setLoading] = useState(true)
+    const[errorMessage, setErrorMessage] = ('')
 
     const changeEmail = (e) =>{
         setEmail(e.target.value)
@@ -24,14 +26,15 @@ const Login = (props) => {
         api.post('/v1/auth/login', 
         {email, password}
         ).then((response) => {
-            console.log(response)
             const res = response.data
             if (response.status === 201){
                 handleSuccessfulAuth(res)
                 localStorage.setItem('token', res.access_token)
                 localStorage.setItem('username', res.username)
                 props.history.push(`/dash/${res.username}`)
-                console.log(api.defaults.Authorization)
+            } else if(response.status !== 401){
+                console.log('Email ou Senha Incorretos')
+                setErrorMessage('Usuário Inválido')
             }
         }).catch(err => console.error(err))
 
@@ -48,7 +51,7 @@ const Login = (props) => {
 
     if(loading){
         return(
-            <h1>Loading...</h1>
+            <Loading />
         )
     } else {
         return(
@@ -58,12 +61,14 @@ const Login = (props) => {
                     <h2>Login</h2>
     
                     <form className='login-form' onSubmit={handleLogin}>
-                        <InputField type='email' required={true} value={email} onChange={changeEmail}>
+                        <InputField type='email' required={true} value={email} onChange={changeEmail} max={128}>
                             Email
                         </InputField>
-                        <InputField type='password' required={true} value={password} onChange={changePsw}>
+                        <p className='error'>{errorMessage}</p>
+                        <InputField type='password' required={true} value={password} onChange={changePsw} max={60} min={8}>
                             Senha
                         </InputField>
+                        {/* <p className='error'>{errorMessage}</p> */}
                         <NextBtn>
                             Continuar
                         </NextBtn>

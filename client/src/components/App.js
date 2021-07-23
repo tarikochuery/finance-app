@@ -11,23 +11,10 @@ import {AuthProvider} from '../providers/AuthProvider';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
-  const [Loading, setLoading] = useState(true)
-  const [username, setUsername] = useState()
 
   const sendAuthtoApp = (auth) => {
     setIsAuth(auth)
-    console.log(isAuth)
   }
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   const username = localStorage.getItem('username')
-  //   console.log('Vindo do App',token, username)
-  //   if(token && username){
-  //     setIsAuth(true)
-  //   }
-  //   setLoading(false)
-  // },[])
 
   return (
     <AuthProvider sendAuthtoApp={sendAuthtoApp}>
@@ -44,7 +31,7 @@ function App() {
             render={(props) => (
               <SignIn {...props} />
             )} />
-            <ProtectedRoute path={`/dash/:${username}`} isAuth={isAuth} component={Dashboard}/>
+            <ProtectedRoute path={'/dash/:user'} isAuth={isAuth} component={Dashboard}/>
           </Switch>
         </Router>    
       </AuthProvider>

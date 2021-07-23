@@ -20,7 +20,7 @@ export default function Modal(props) {
                     <ContinueBtn kind='next' 
                                  route='/login' 
                                  className='modal-btn'>
-                        Fechar
+                        {props.comand}
                     </ContinueBtn>
                 </footer>
             </div>

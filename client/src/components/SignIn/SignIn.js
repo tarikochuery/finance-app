@@ -28,11 +28,11 @@ const SignIn = (props) => {
         api.post('/v1/auth/register',
         {username, email, password}
         ).then((res) => {
-            console.log(res)
             if( res.status === 201) {
                 setModalShow(true)
             } else {
                 alert('Ops! Parece que ocorreu um erro! Tente Novamente.')
+                // TODO Mensagem de erro
             }
         }).catch(err => console.error(err))
     }
@@ -49,7 +49,7 @@ const SignIn = (props) => {
                     <InputField type='email' max={128} required={true} value={email} onChange={handleChangeEmail}>
                         Email
                     </InputField>
-                    <InputField type='password' max={60} required={true} value={password} onChange={handleChangePsw}>
+                    <InputField type='password' max={60} min={8} required={true} value={password} onChange={handleChangePsw}>
                         Senha
                     </InputField>
                     <NextBtn>
@@ -60,7 +60,7 @@ const SignIn = (props) => {
                                                             textDecoration: 'underline'}}
                 >Iniciar Sessão</Link></p>
             </div>
-            <Modal show={modalShow} title='Cadastro Efetuado com Sucesso'>
+            <Modal show={modalShow} title='Cadastro Efetuado com Sucesso' comand='Próximo'>
                 <p>Parabéns! Você acabou de efetuar seu cadastro!</p>
                 <p>Clique no botão abaixo para seguir pra área de login.</p>
             </Modal>
