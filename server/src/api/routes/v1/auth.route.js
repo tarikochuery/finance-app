@@ -7,12 +7,12 @@ const authRoute = Express.Router();
 // /v1/auth/register
 authRoute.route("/register")
     .get(middlewares.status)
-    .post(middlewares.auth.register)
+    .post(validators.auth.register, middlewares.auth.register)
 
 // /v1/auth/login
 authRoute.route("/login")
     .get(middlewares.status)
-    .post(validators.password, middlewares.auth.login)
+    .post(validators.auth.login, middlewares.auth.login)
 
 // /v1/auth/check-token (apenas para teste)
 authRoute.route("/check-token")

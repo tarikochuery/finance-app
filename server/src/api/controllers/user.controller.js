@@ -21,6 +21,21 @@ async function register(username, email, password) {
     })
 }
 
+/**
+ * Verifica se o email existe na base de dados
+ * @param {string} email 
+ * @returns {Promise<boolean}
+ */
+async function hasEmail(email) {
+    const userRepo = TypeORM.getRepository(models.User)
+
+    return userRepo.findAndCount({
+        where: {
+            email
+        }
+    }).then(([_, count]) => count > 0)
+}
+
 const getBy = {
     /**
      * @param {string} id 
@@ -50,5 +65,6 @@ const getBy = {
 
 module.exports = {
     register,
-    getBy
+    getBy,
+    hasEmail
 }

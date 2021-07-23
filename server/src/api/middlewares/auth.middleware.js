@@ -9,6 +9,9 @@ const controllers = require("../controllers");
 async function register(req, res, next) {
     const { username, email, password } = req.body;
 
+    // TODO: validar campos de entrada
+    // TODO: verificar se o email ainda não existe
+
     const wroteData = await controllers.user.register(username, email, password);
 
     res.status(201).send({
@@ -28,16 +31,15 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     const { email } = req.body
 
+    // TODO: validar campos de entrada
+
     const user = await controllers.user.getBy.email(email)
 
-    const tokenData = controllers.auth.generateToken({id: user.id}, 86400)
+    // TODO: validar se email existe
 
-    const body = {
-        username: user.username,
-        ...tokenData
-    }
+    const tokenData = controllers.auth.generateToken({id: user.id, username: user.username}, 86400)
 
-    res.status(201).send(body)
+    res.status(201).send(tokenData)
 }
 
 module.exports = {
