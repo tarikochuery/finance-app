@@ -1,29 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import './login.css'
 import {Icon, InputField, NextBtn} from '../Atoms/atoms'
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+// import api from '../../services/api';
+import { Context } from '../../providers/AuthProvider';
 
 const Login = (props) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const handleChangeEmail = (e) =>{
-        setEmail(e.target.value)
-    }
-
-    const handleChangePsw = (e) =>{
-        setPassword(e.target.value)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        props.history.push('/dash/1')
-        console.log([email, password])
-        // Enviar dados colocados pelo user para o server
-        
-
-        // Obter a resposta do server e mandar retorno para user
-    }
+    const {handleLogin, email, password, changeEmail, changePsw} = useContext(Context)
 
     return(
         <div className='content' id='login'>
@@ -31,11 +14,11 @@ const Login = (props) => {
                 <Icon image='assets/images/user.svg' kind='login' />
                 <h2>Login</h2>
 
-                <form className='login-form' onSubmit={handleSubmit}>
-                    <InputField type='email' required={true} value={email} onChange={handleChangeEmail}>
+                <form className='login-form' onSubmit={handleLogin}>
+                    <InputField type='email' required={true} value={email} onChange={changeEmail}>
                         Email
                     </InputField>
-                    <InputField type='password' required={true} value={password} onChange={handleChangePsw}>
+                    <InputField type='password' required={true} value={password} onChange={changePsw}>
                         Senha
                     </InputField>
                     <NextBtn>
