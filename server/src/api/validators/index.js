@@ -4,5 +4,6 @@ const auth = require("./auth.validator");
 
 module.exports = {
     password,
+    token,
     auth
 }
