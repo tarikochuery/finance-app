@@ -30,7 +30,12 @@ async function login(req, res, next) {
 
     const user = await controllers.user.getBy.email(email)
 
-    const body = controllers.auth.generateToken({id: user.id}, 86400)
+    const tokenData = controllers.auth.generateToken({id: user.id}, 86400)
+
+    const body = {
+        username: user.username,
+        ...tokenData
+    }
 
     res.status(201).send(body)
 }
