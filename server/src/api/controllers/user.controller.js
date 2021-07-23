@@ -21,6 +21,34 @@ async function register(username, email, password) {
     })
 }
 
+const getBy = {
+    /**
+     * @param {string} id 
+     */
+    id: async (id) => {
+        return TypeORM.getRepository(models.User).findOne({
+            where: { id }
+        })
+    },
+    /**
+     * @param {string} email 
+     */
+    email: async (email) => {
+        return TypeORM.getRepository(models.User).findOne({
+            where: { email }
+        })
+    },
+    /**
+     * @param {string} username 
+     */
+    username: async (username) => {
+        return TypeORM.getRepository(models.User).findOne({
+            where: { username }
+        })
+    }
+}
+
 module.exports = {
     register,
+    getBy
 }
