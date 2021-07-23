@@ -1,52 +1,52 @@
-import React, {createContext, useState} from 'react'
-import api from '../services/api'
+import React, {createContext, useEffect, useState} from 'react'
+import Loading from '../components/Loading/Loading'
 
 const Context = createContext()
 
 function AuthProvider({children}) {
 
+    
     const[isAuth, setIsAuth] = useState(false)
-    const[user, setUser] = useState({})
-    const[password, setPassword] = useState('')
-    const[email, setEmail] = useState('')
+    const[username, setUsername] = useState()
+    const[loading, setLoading] = useState(true) 
+    
+    const isLoggedIn = () =>{
+        const token = localStorage.getItem('token')
+        const user = localStorage.getItem('username')
+        if(token && user){
+            setIsAuth(true)
+            setUsername(user)
+        } else {
+            setIsAuth(false)
+            localStorage.removeItem('username')
+            localStorage.removeItem('token')
+        }
+        
+    }
+    
+    const handleSuccessfulAuth = (data) =>{
+        console.log(data)
+        setIsAuth(true)
+        setUsername(data.username)
+    }
+    
+    useEffect(() => {
+        isLoggedIn()
 
-    const changeEmail = (e) =>{
-        setEmail(e.target.value)
+        setLoading(false)
+    },[])
+    
+    if(loading){
+        return <h1>Loading...</h1>
+    } else {
+        return (
+            <Context.Provider 
+            value={{isAuth, username, handleSuccessfulAuth}}>
+                {children}
+            </Context.Provider>
+        )
     }
 
-    const changePsw = (e) =>{
-        setPassword(e.target.value)
-    }
-
-    const handleLogin = (e) => {
-        e.preventDefault()
-        // Enviar dados colocados pelo user para o server
-        api.post('/v1/auth/login', 
-        {email, password}
-        ).then((response) => {
-            console.log(response)
-            const res = response.data
-            localStorage.setItem('token', res.access_token)
-            const token = localStorage.getItem('token')
-            console.log(token)
-        })
-
-        // Obter a resposta do server e mandar retorno para user
-            // Salvar dados do user
-            // Salvar token no local storage
-    }
-
-    return (
-        <Context.Provider 
-        value={{isAuth, 
-                handleLogin, 
-                email, 
-                password, 
-                changeEmail, 
-                changePsw }}>
-            {children}
-        </Context.Provider>
-    )
 }
 
 export  {AuthProvider, Context}

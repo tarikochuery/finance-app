@@ -34,7 +34,7 @@ const SignIn = (props) => {
             } else {
                 alert('Ops! Parece que ocorreu um erro! Tente Novamente.')
             }
-        })
+        }).catch(err => console.error(err))
     }
 
     return(
