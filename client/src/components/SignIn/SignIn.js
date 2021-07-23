@@ -25,8 +25,8 @@ const SignIn = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        api.post('/v1/auth/register'
-        ,{username, email, password}
+        api.post('/v1/auth/register',
+        {username, email, password}
         ).then((res) => {
             console.log(res)
             if( res.status === 201) {
@@ -35,11 +35,6 @@ const SignIn = (props) => {
                 alert('Ops! Parece que ocorreu um erro! Tente Novamente.')
             }
         })
-        // props.history.push('/login')
-        // console.log({username, email, password})
-        // Enviar dados para servidor
-
-        // Receber dados e enviar resposta para user
     }
 
     return(
