@@ -1,16 +1,17 @@
-import React from 'react'
+import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { BackButton, Icon, IconBtn } from '../Atoms/atoms'
-
+import { HeaderBtn, Icon, IconBtn } from '../Atoms/atoms'
+import {Context} from '../../providers/AuthProvider'
 import './dashboard.css'
 
 const Dashboard = () => {
-    
+   const {username} = useContext(Context)
+
     return(
     <div id='dash' className='content'>
         <header>
-            <BackButton />
-            <p>Olá, usuário!</p>
+            <HeaderBtn type={'logout'}/>
+            <p>Olá, {username}!</p>
         </header>
         <div className='wrapper'>
             <Icon kind='flag' image='/assets/images/flag.svg'/>

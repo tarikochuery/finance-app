@@ -1,0 +1,36 @@
+.modal{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content{
+    width: 500px;
+    background-color: rgba(246, 247, 251, 1);
+}
+
+.modal-header, .modal-footer{
+    padding: 10px;
+}
+
+.modal-header .success{
+    color:#4CCC81
+}
+
+.modal-footer{
+    width: 200px;
+}
+
+.modal-body{
+    padding: 10px;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+

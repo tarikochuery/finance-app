@@ -1,53 +1,85 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './login.css'
 import {Icon, InputField, NextBtn} from '../Atoms/atoms'
 import { Link } from 'react-router-dom';
-import axios from 'axios'
+import api from '../../services/api';
+import { Context } from '../../providers/AuthProvider';
+import Loading from '../Loading/Loading'
 
 const Login = (props) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const handleChangeEmail = (e) =>{
+    const {isAuth, handleSuccessfulAuth, username} = useContext(Context)
+    const[email, setEmail] = useState('')
+    const[password, setPassword] = useState('')
+    const[loading, setLoading] = useState(true)
+    const[errorMessage, setErrorMessage] = ('')
+
+    const changeEmail = (e) =>{
         setEmail(e.target.value)
     }
 
-    const handleChangePsw = (e) =>{
+    const changePsw = (e) =>{
         setPassword(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault()
-        props.history.push('/dash/1')
-        console.log([email, password])
-        // Enviar dados colocados pelo user para o server
-        
+        api.post('/v1/auth/login', 
+        {email, password}
+        ).then((response) => {
+            const res = response.data
+            if (response.status === 201){
+                handleSuccessfulAuth(res)
+                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('username', res.username)
+                props.history.push(`/dash/${res.username}`)
+            } else if(response.status !== 401){
+                console.log('Email ou Senha Incorretos')
+                setErrorMessage('Usuário Inválido')
+            }
+        }).catch(err => console.error(err))
 
-        // Obter a resposta do server e mandar retorno para user
     }
 
-    return(
-        <div className='content' id='login'>
-            <div className='wrapper'>
-                <Icon image='assets/images/user.svg' kind='login' />
-                <h2>Login</h2>
+    useEffect(() => {
 
-                <form className='login-form' onSubmit={handleSubmit}>
-                    <InputField type='email' required={true} value={email} onChange={handleChangeEmail}>
-                        Email
-                    </InputField>
-                    <InputField type='password' required={true} value={password} onChange={handleChangePsw}>
-                        Senha
-                    </InputField>
-                    <NextBtn>
-                        Continuar
-                    </NextBtn>
-                </form>
-                <p>Ainda não tem uma conta? <Link to='/sign' 
-                style={{color: '#4CCC81', textDecoration: 'underline'}}
-                >Cadastre-se</Link> </p>
+            if(isAuth){
+                props.history.push(`/dash/${username}`)
+            }
+        
+        setLoading(false)
+    }, [])
+
+    if(loading){
+        return(
+            <Loading />
+        )
+    } else {
+        return(
+            <div className='content' id='login'>
+                <div className='wrapper'>
+                    <Icon image='assets/images/user.svg' kind='login' />
+                    <h2>Login</h2>
+    
+                    <form className='login-form' onSubmit={handleLogin}>
+                        <InputField type='email' required={true} value={email} onChange={changeEmail} max={128}>
+                            Email
+                        </InputField>
+                        <p className='error'>{errorMessage}</p>
+                        <InputField type='password' required={true} value={password} onChange={changePsw} max={60} min={8}>
+                            Senha
+                        </InputField>
+                        {/* <p className='error'>{errorMessage}</p> */}
+                        <NextBtn>
+                            Continuar
+                        </NextBtn>
+                    </form>
+                    <p>Ainda não tem uma conta? <Link to='/sign' 
+                    style={{color: '#4CCC81', textDecoration: 'underline'}}
+                    >Cadastre-se</Link> </p>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
 export default Login

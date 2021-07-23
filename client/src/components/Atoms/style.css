@@ -27,17 +27,25 @@
 }
 
 
-.back-btn{
+.header-btn{
     width: 30px;
     height: 30px;
-    background-color: #D8F6E4;
+    
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.back-btn:hover, .continue-btn:hover{
+.header-btn.back{
+    background-color: #D8F6E4;
+}
+
+.header-btn.logout{
+    background-color: #FFF1F1;
+}
+
+.header-btn:hover, .continue-btn:hover{
     cursor: pointer;
 }
 /* --------------------------------Icons----------------------------------------------- */
