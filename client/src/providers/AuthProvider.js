@@ -5,18 +5,21 @@ const authContext = createContext()
 
 function AuthProvider({children}) {  
     const[isAuth, setIsAuth] = useState(authenticate.isLogedIn)
-    const[username, setUsername] = useState(decoder.decode(localStorage.getItem('token')).username)
-    const[id, setId] = useState(decoder.decode(localStorage.getItem('token')).id)
+    const[username, setUsername] = useState(isAuth && decoder.decode(localStorage.getItem('token')).username)
+    const[id, setId] = useState(isAuth && decoder.decode(localStorage.getItem('token')).id)
 
     const login = async (email, password) =>{
         await authenticate.login(email, password)
         setIsAuth(authenticate.isAuthenticated)
-        setUsername(decoder.decode(localStorage.getItem('token')).id)
+        setUsername(decoder.decode(localStorage.getItem('token')).username)
+        setId(decoder.decode(localStorage.getItem('token')).id)
     }
 
     const logout = () => {
         localStorage.removeItem('token')
         setIsAuth(false)
+        setUsername()
+        setId()
     }
     
     return (
