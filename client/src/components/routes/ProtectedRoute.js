@@ -3,7 +3,8 @@ import { Route, Redirect } from 'react-router-dom'
 import useAuth from '../../Hooks/useAuth'
 
 export default function ProtectedRoute({component: Component, ...rest}) {
-    const {isAuth} = useAuth
+    const {isAuth} = useAuth()
+    console.log(isAuth)
     return (
         <Route 
             {...rest}

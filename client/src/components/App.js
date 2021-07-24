@@ -18,7 +18,11 @@ function App() {
 
   return (
     <AuthProvider sendAuthtoApp={sendAuthtoApp}>
-        <Routes />    
+        <Router>
+          <Switch>
+            <Routes />
+          </Switch>
+        </Router>   
     </AuthProvider>
   );
 }

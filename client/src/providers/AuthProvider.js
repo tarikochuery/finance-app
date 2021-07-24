@@ -1,13 +1,11 @@
 import React, {createContext, useEffect, useState} from 'react'
-import Loading from '../components/Loading/Loading'
 import { authenticate } from '../services/authenticate'
 
 const authContext = createContext()
 
 function AuthProvider({children}) {  
-    const[isAuth, setIsAuth] = useState(false)
+    const[isAuth, setIsAuth] = useState(authenticate.isLogedIn)
     const[username, setUsername] = useState()
-    const[loading, setLoading] = useState(true) 
     
     const login = async (email, password) =>{
         await authenticate.login(email, password)
