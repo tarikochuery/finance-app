@@ -4,7 +4,6 @@ import useAuth from '../../Hooks/useAuth'
 
 export default function ProtectedRoute({component: Component, ...rest}) {
     const {isAuth} = useAuth()
-    console.log(isAuth)
     return (
         <Route 
             {...rest}

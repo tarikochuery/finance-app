@@ -8,10 +8,10 @@ export const authenticate = {
            localStorage.setItem('token', res.data.access_token)
            this.isAuthenticated = true
        } catch (error) {
-           console.error(error)
+           
        }
     },
     isLogedIn(){
-        return localStorage.getItem('token') ? true : false
+        return (localStorage.getItem('token') ? true : false)
     }
 }

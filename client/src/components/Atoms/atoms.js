@@ -40,12 +40,20 @@ export const ContinueBtn = ({children, kind, route}) => {
     )
 }
 
-export const NextBtn = ({children}) => {
-    return(                    
-        <button type='submit' className={`continue-btn next`}>
-            <span>{children}</span> <img src='assets/images/white-arrow.svg' alt=''/> 
-        </button>        
-    )
+export const ModalBtn = ({children, onClick, type, to}) => {
+    if (type === 'link'){
+        return(
+            <Link className={`continue-btn next`} to={to}>
+                <span>{children}</span> <img src='assets/images/white-arrow.svg' alt=''/> 
+            </Link>
+        )
+    } else {
+        return(                    
+            <button className={`continue-btn next`} onClick={onClick}>
+                <span>{children}</span> <img src='assets/images/white-arrow.svg' alt=''/> 
+            </button>        
+        )
+    }
 }
 
 export const InputField = ({type, children, max, required, onChange, value, min}) => {

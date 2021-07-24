@@ -10,14 +10,8 @@ import {AuthProvider} from '../providers/AuthProvider';
 import Routes from './routes/Routes';
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false)
-
-  const sendAuthtoApp = (auth) => {
-    setIsAuth(auth)
-  }
-
   return (
-    <AuthProvider sendAuthtoApp={sendAuthtoApp}>
+    <AuthProvider>
         <Router>
           <Switch>
             <Routes />

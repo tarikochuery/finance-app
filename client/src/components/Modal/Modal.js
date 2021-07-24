@@ -1,5 +1,5 @@
 import React from 'react'
-import { ContinueBtn } from '../Atoms/atoms'
+import { ModalBtn } from '../Atoms/atoms'
 import './modal.css'
 
 export default function Modal(props) {
@@ -17,11 +17,12 @@ export default function Modal(props) {
                     {props.children}
                 </main>
                 <footer className='modal-footer'>
-                    <ContinueBtn kind='next' 
-                                 route='/login' 
-                                 className='modal-btn'>
+                    <ModalBtn to={props.to}
+                              type={props.type} 
+                              onClick={props.onClose} 
+                              className='modal-btn'>
                         {props.comand}
-                    </ContinueBtn>
+                    </ModalBtn>
                 </footer>
             </div>
         </div>

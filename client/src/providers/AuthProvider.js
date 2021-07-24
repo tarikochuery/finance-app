@@ -1,6 +1,7 @@
 import React, {createContext, useState} from 'react'
 import { authenticate } from '../services/authenticate'
 import decoder from '../services/jwtDecoder'
+
 const authContext = createContext()
 
 function AuthProvider({children}) {  
@@ -10,9 +11,15 @@ function AuthProvider({children}) {
 
     const login = async (email, password) =>{
         await authenticate.login(email, password)
-        setIsAuth(authenticate.isAuthenticated)
-        setUsername(decoder.decode(localStorage.getItem('token')).username)
-        setId(decoder.decode(localStorage.getItem('token')).id)
+        if(authenticate.isLogedIn()){
+            setIsAuth(authenticate.isAuthenticated)
+            setUsername(decoder.decode(localStorage.getItem('token')).username)
+            setId(decoder.decode(localStorage.getItem('token')).id)
+        } else {
+            console.log('passei no Else')
+            setIsAuth(false)
+            return true
+        }
     }
 
     const logout = () => {
