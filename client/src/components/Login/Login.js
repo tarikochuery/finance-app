@@ -22,10 +22,10 @@ const Login = () => {
         setPassword(e.target.value)
     }
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
         setLoading(true)
-        const loginFailure = login(email, password)
+        const loginFailure = await login(email, password)
         loginFailure && setShowError(true)
     }
 

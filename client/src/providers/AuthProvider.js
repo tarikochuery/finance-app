@@ -16,7 +16,6 @@ function AuthProvider({children}) {
             setUsername(decoder.decode(localStorage.getItem('token')).username)
             setId(decoder.decode(localStorage.getItem('token')).id)
         } else {
-            console.log('passei no Else')
             setIsAuth(false)
             return true
         }

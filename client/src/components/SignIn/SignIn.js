@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './signin.css'
 import { Icon, InputField, ModalBtn } from '../Atoms/atoms';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import Modal from '../Modal/Modal';
 
@@ -10,7 +10,6 @@ const SignIn = () => {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [modalShow, setModalShow] = useState(false)
-    const history = useHistory()
 
     const handleChangeEmail = (e) => {
         setEmail(e.target.value)
