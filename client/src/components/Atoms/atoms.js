@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, {useEffect, useState} from 'react'
 import './style.css'
 import { Link, useHistory } from 'react-router-dom'
-import { Context } from '../../providers/AuthProvider'
+import useAuth from '../../Hooks/useAuth'
 
 export const Icon = ({image, kind}) => {
     return(
@@ -69,15 +69,10 @@ export const InputField = ({type, children, max, required, onChange, value, min}
 }
 
 export const HeaderBtn = ({type}) => {
-    const {handleSuccessfulLogout} = useContext(Context)
+    const {logout} = useAuth()
     const history = useHistory()
     
     const back = () => {history.goBack()}
-
-    const logout = () => {
-        handleSuccessfulLogout()
-        history.push('/login')
-    }
 
     const btnConfig =[
         {type: 'goBack', action: back, img: '/assets/images/back-arrow.svg'},

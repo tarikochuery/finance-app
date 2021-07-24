@@ -6,8 +6,8 @@ import Home from './Home/Home';
 import Login from './Login/Login';
 import SignIn from './SignIn/SignIn';
 import Dashboard from './Dashboard/Dashboard';
-
 import {AuthProvider} from '../providers/AuthProvider';
+import Routes from './routes/Routes';
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
@@ -18,23 +18,8 @@ function App() {
 
   return (
     <AuthProvider sendAuthtoApp={sendAuthtoApp}>
-      <Router>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route 
-            path='/login' 
-            render={props => (
-              <Login {...props} />
-            )}/>
-            <Route 
-            path='/sign' 
-            render={(props) => (
-              <SignIn {...props} />
-            )} />
-            <ProtectedRoute path={'/dash/:user'} isAuth={isAuth} component={Dashboard}/>
-          </Switch>
-        </Router>    
-      </AuthProvider>
+        <Routes />    
+    </AuthProvider>
   );
 }
 

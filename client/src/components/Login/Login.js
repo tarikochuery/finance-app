@@ -1,13 +1,12 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './login.css'
 import {Icon, InputField, NextBtn} from '../Atoms/atoms'
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
-import { Context } from '../../providers/AuthProvider';
+import useAuth from '../../Hooks/useAuth';
 import Loading from '../Loading/Loading'
 
 const Login = (props) => {
-    const {isAuth, handleSuccessfulAuth, username} = useContext(Context)
+    const {isAuth, login, username} = useAuth()
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
     const[loading, setLoading] = useState(true)
@@ -23,37 +22,23 @@ const Login = (props) => {
 
     const handleLogin = (e) => {
         e.preventDefault()
-        api.post('/v1/auth/login', 
-        {email, password}
-        ).then((response) => {
-            const res = response.data
-            if (response.status === 201){
-                handleSuccessfulAuth(res)
-                localStorage.setItem('token', res.access_token)
-                localStorage.setItem('username', res.username)
-                props.history.push(`/dash/${res.username}`)
-            } else if(response.status !== 401){
-                console.log('Email ou Senha Incorretos')
-                setErrorMessage('Usuário Inválido')
-            }
-        }).catch(err => console.error(err))
-
+        login(email, password)
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-            if(isAuth){
-                props.history.push(`/dash/${username}`)
-            }
+    //         if(isAuth){
+    //             props.history.push(`/dash/${username}`)
+    //         }
         
-        setLoading(false)
-    }, [])
+    //     setLoading(false)
+    // }, [])
 
-    if(loading){
-        return(
-            <Loading />
-        )
-    } else {
+    // if(loading){
+    //     return(
+    //         <Loading />
+    //     )
+    // } else {
         return(
             <div className='content' id='login'>
                 <div className='wrapper'>
@@ -79,7 +64,7 @@ const Login = (props) => {
                 </div>
             </div>
         )
-    }
+    // }
 }
 
 export default Login

@@ -1,7 +1,9 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import useAuth from '../../Hooks/useAuth'
 
-export default function ProtectedRoute({isAuth: isAuth, component: Component, ...rest}) {
+export default function ProtectedRoute({component: Component, ...rest}) {
+    const {isAuth} = useAuth
     return (
         <Route 
             {...rest}

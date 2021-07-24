@@ -1,11 +1,11 @@
 import React, { useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import useAuth from '../../Hooks/useAuth'
 import { HeaderBtn, Icon, IconBtn } from '../Atoms/atoms'
-import {Context} from '../../providers/AuthProvider'
 import './dashboard.css'
 
 const Dashboard = () => {
-   const {username} = useContext(Context)
+   const {username} = useAuth
 
     return(
     <div id='dash' className='content'>

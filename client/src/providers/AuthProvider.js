@@ -1,59 +1,30 @@
 import React, {createContext, useEffect, useState} from 'react'
 import Loading from '../components/Loading/Loading'
-import api from '../services/api'
+import { authenticate } from '../services/authenticate'
 
-const Context = createContext()
+const authContext = createContext()
 
-function AuthProvider({children, sendAuthtoApp}) {
-
-    
+function AuthProvider({children}) {  
     const[isAuth, setIsAuth] = useState(false)
     const[username, setUsername] = useState()
     const[loading, setLoading] = useState(true) 
     
-    const isLoggedIn = () =>{
-        const token = localStorage.getItem('token')
-        const user = localStorage.getItem('username')
-        if(token && user){
-            setIsAuth(true)
-            setUsername(user)
-            sendAuthtoApp(isAuth)
-            api.defaults.Authorization = `bearer ${token}`
-        } else {
-            setIsAuth(false)
-            localStorage.removeItem('username')
-            localStorage.removeItem('token')
-            sendAuthtoApp(isAuth)
-        }
-    }
-    
-    const handleSuccessfulAuth = (data) =>{
-        setIsAuth(true)
-        setUsername(data.username)
+    const login = async (email, password) =>{
+        await authenticate.login(email, password)
+        setIsAuth(authenticate.isAuthenticated)
     }
 
-    const handleSuccessfulLogout = () => {
+    const logout = () => {
         localStorage.removeItem('token')
         setIsAuth(false)
     }
     
-    useEffect(() => {
-        isLoggedIn()
-
-        setLoading(false)
-    },[isAuth])
-    
-    if(loading){
-        return <Loading/>
-    } else {
-        return (
-            <Context.Provider 
-            value={{isAuth, username, handleSuccessfulAuth, handleSuccessfulLogout}}>
-                {children}
-            </Context.Provider>
-        )
-    }
-
+    return (
+        <authContext.Provider 
+        value={{isAuth, username, login, logout}}>
+            {children}
+        </authContext.Provider>
+    )
 }
 
-export  {AuthProvider, Context}
+export {AuthProvider, authContext}
