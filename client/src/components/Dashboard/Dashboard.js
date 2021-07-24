@@ -5,7 +5,7 @@ import { HeaderBtn, Icon, IconBtn } from '../Atoms/atoms'
 import './dashboard.css'
 
 const Dashboard = () => {
-   const {username} = useAuth
+   const {username} = useAuth()
 
     return(
     <div id='dash' className='content'>

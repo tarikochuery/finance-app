@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../Hooks/useAuth';
 
 const Login = () => {
-    const {isAuth, login} = useAuth()
+    const {isAuth, login, id} = useAuth()
     const[email, setEmail] = useState('')
     const[password, setPassword] = useState('')
     const[errorMessage, setErrorMessage] = ('')
@@ -25,7 +25,7 @@ const Login = () => {
     }
 
     useEffect(() =>{
-        isAuth && history.push('/dash/Tarik')
+        isAuth && history.push(`/dash/${id}`)
     })
 
     return(
