@@ -34,14 +34,33 @@ function verify(token) {
 
 /**
  * @param {string} token 
- * @returns {string}
+ * @returns {object}
  */
 function decode(token) {
-    return jwt.decode(token)
+    //jwt.decode retorna `null` caso o token seja inválido.
+    return jwt.decode(token) ? true : false
+}
+
+/**
+ * Separa o *tipo de token* do *token* definitivo.
+ * @param {string} token 
+ * @returns {{type: string, token: string}}
+ */
+function untype(token) {
+    const data = token
+        .trim()
+        .split(" ", 2)
+        .filter(v => v.length !== 0)
+    ;
+    return {
+        type: data[0],
+        token: data[1]
+    }
 }
 
 module.exports = {
     sign,
     verify,
-    decode
+    decode,
+    untype
 }

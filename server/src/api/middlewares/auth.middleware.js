@@ -1,5 +1,7 @@
 const Express = require("express");
 const controllers = require("../controllers");
+const validators = require("../validators");
+const errors = require("../errors");
 
 /**
  * @param {Express.Request} req 
@@ -45,16 +47,41 @@ async function login(req, res, next) {
     res.status(201).send(tokenData)
 }
 
-    const user = await controllers.user.getBy.email(email)
+/**
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ * @param {Express.NextFunction} next 
+ */
+async function validateLogin(req, res, next) {
+    const { validateEmail, validatePassword } = validators.user
+    const { emailInvalid, passwordIncorrect } = errors.auth
+    const { handlePromise } = errors.APIError
 
-    // TODO: validar se email existe
+    // TODO: validar se os cambos
+    // {email, password} existem.
+    const { email, password } = req.body
 
-    const tokenData = controllers.auth.generateToken({id: user.id, username: user.username}, 86400)
+    Promise.resolve()
+        .then(() => validateEmail(email))
+        .then(throwErr(emailInvalid))
 
-    res.status(201).send(tokenData)
+        .then(() => validatePassword(password, { email }))
+        .then(throwErr(passwordIncorrect))
+
+        .then(next)
+        .catch(handlePromise(res))
+    ;
+}
+
+function throwErr(err) {
+    return async bool => {
+        if(!bool) throw err
+        else return
+    }
 }
 
 module.exports = {
     register,
-    login
+    login,
+    validateLogin
 }

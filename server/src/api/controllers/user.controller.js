@@ -24,7 +24,7 @@ async function register(username, email, password) {
 /**
  * Verifica se o email existe na base de dados
  * @param {string} email 
- * @returns {Promise<boolean}
+ * @returns {Promise<boolean>}
  */
 async function hasEmail(email) {
     const userRepo = TypeORM.getRepository(models.User)

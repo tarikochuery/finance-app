@@ -12,7 +12,8 @@ authRoute.route("/register")
 // /v1/auth/login
 authRoute.route("/login")
     .get(middlewares.status)
-    .post(validators.auth.login, middlewares.auth.login)
+    .post(middlewares.auth.validateLogin, middlewares.auth.login)
+
 
 // /v1/auth/check-token (apenas para teste)
 authRoute.route("/check-token")

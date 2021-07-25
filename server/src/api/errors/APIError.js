@@ -19,7 +19,18 @@ module.exports = class APIError extends Error {
      * @param {Express.Response} res 
      * @param {APIError} error 
      */
-    static async handle(res, error) {
+     static async handle(res, error) {
         return res.status(error.code).json(error.errorBody)
+    }
+
+    /**
+     * (res: Express.Response) => (error: APIError) => void
+     * @param {Express.Response} res
+     * @returns {Promise<(error: APIError) => void>}
+     */
+    static handlePromise(res) {
+        return async function(error) {
+            return res.status(error.code).json(error.errorBody)
+        }
     }
 }
