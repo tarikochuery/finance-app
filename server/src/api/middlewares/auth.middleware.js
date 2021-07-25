@@ -31,7 +31,19 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     const { email } = req.body
 
-    // TODO: validar campos de entrada
+    const user = await controllers.user.getBy.email(email)
+
+    const tokenData = controllers.auth.generateToken(
+        {
+            id: user.id,
+            username: user.username,
+            access_token: true
+        },
+        86400
+    )
+
+    res.status(201).send(tokenData)
+}
 
     const user = await controllers.user.getBy.email(email)
 
