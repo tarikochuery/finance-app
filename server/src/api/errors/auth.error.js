@@ -32,11 +32,17 @@ const tokenInvalid = new APIError(403, {
     error_description: "O token é inválido ou expirou."
 })
 
+const authorizationInvalid = new APIError(400, {
+    error: "bad_authorization",
+    error_description: "O header 'Authorization' não foi encontrado ou está inválido."
+})
+
 module.exports = {
     passwordIncorrect,
     emailNotFound,
     passwordLength,
     emailAlreadyExist,
     tokenInvalid,
-    emailInvalid
+    emailInvalid,
+    authorizationInvalid
 }

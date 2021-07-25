@@ -1,14 +1,12 @@
 const Express = require("express");
 const controllers = require("../controllers");
-const validators = require("../validators");
-const errors = require("../errors");
+const jwt = require("../../config/jwt");
 
 /**
  * @param {Express.Request} req 
  * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
  */
-async function register(req, res, next) {
+async function register(req, res) {
     const { username, email, password } = req.body;
 
     // TODO: validar campos de entrada
@@ -28,60 +26,47 @@ async function register(req, res, next) {
 /**
  * @param {Express.Request} req 
  * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
  */
-async function login(req, res, next) {
+async function login(req, res) {
+    const { getBy }           = controllers.user
+    const { generateTokens } = controllers.auth
+
     const { email } = req.body
 
-    const user = await controllers.user.getBy.email(email)
+    Promise.resolve()
+        .then(()   => getBy.email(email))
+        .then(user => generateTokens(user.id, user.username))
 
-    const tokenData = controllers.auth.generateToken(
-        {
-            id: user.id,
-            username: user.username,
-            access_token: true
-        },
-        86400
-    )
-
-    res.status(201).send(tokenData)
+        // utilizar `res.status(200).send` diretamente
+        // na função causa um erro.
+        .then(body => res.status(200).send(body))
+    ;
 }
 
 /**
  * @param {Express.Request} req 
  * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
  */
-async function validateLogin(req, res, next) {
-    const { validateEmail, validatePassword } = validators.user
-    const { emailInvalid, passwordIncorrect } = errors.auth
-    const { handlePromise } = errors.APIError
+ async function refresh(req, res) {
+    const { generateTokens } = controllers.auth
 
-    // TODO: validar se os cambos
-    // {email, password} existem.
-    const { email, password } = req.body
+    const authorization = req.headers.authorization
+
+    const { token } = jwt.untype(authorization)
+
+    const { id, username } = jwt.decode(token)
 
     Promise.resolve()
-        .then(() => validateEmail(email))
-        .then(throwErr(emailInvalid))
+        .then(() => generateTokens(id, username))
 
-        .then(() => validatePassword(password, { email }))
-        .then(throwErr(passwordIncorrect))
-
-        .then(next)
-        .catch(handlePromise(res))
+        // utilizar `res.status(200).send` diretamente
+        // na função causa um erro.
+        .then(body => res.status(200).send(body))
     ;
-}
-
-function throwErr(err) {
-    return async bool => {
-        if(!bool) throw err
-        else return
-    }
 }
 
 module.exports = {
     register,
     login,
-    validateLogin
+    refresh
 }

@@ -1,9 +1,7 @@
-const token = require("./token.validator");
-const auth = require("./auth.validator");
 const user = require("./user.validator");
+const header = require("./header.validator");
 
 module.exports = {
-    token,
-    auth,
-    user
+    user,
+    header
 }
