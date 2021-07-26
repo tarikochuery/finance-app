@@ -15,4 +15,4 @@ const models = require("../database/models");
 //     ]
 // })
 TypeORM.createConnection()
-.catch(console.log)
+.catch(console.error)

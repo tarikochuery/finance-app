@@ -1,12 +1,12 @@
 const Express = require("express");
 const controllers = require("../controllers");
+const jwt = require("../../config/jwt");
 
 /**
  * @param {Express.Request} req 
  * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
  */
-async function register(req, res, next) {
+async function register(req, res) {
     const { username, email, password } = req.body;
 
     // TODO: validar campos de entrada
@@ -26,23 +26,47 @@ async function register(req, res, next) {
 /**
  * @param {Express.Request} req 
  * @param {Express.Response} res 
- * @param {Express.NextFunction} next 
  */
-async function login(req, res, next) {
+async function login(req, res) {
+    const { getBy }           = controllers.user
+    const { generateTokens } = controllers.auth
+
     const { email } = req.body
 
-    // TODO: validar campos de entrada
+    Promise.resolve()
+        .then(()   => getBy.email(email))
+        .then(user => generateTokens(user.id, user.username))
 
-    const user = await controllers.user.getBy.email(email)
+        // utilizar `res.status(200).send` diretamente
+        // na função causa um erro.
+        .then(body => res.status(200).send(body))
+    ;
+}
 
-    // TODO: validar se email existe
+/**
+ * @param {Express.Request} req 
+ * @param {Express.Response} res 
+ */
+ async function refresh(req, res) {
+    const { generateTokens } = controllers.auth
 
-    const tokenData = controllers.auth.generateToken({id: user.id, username: user.username}, 86400)
+    const authorization = req.headers.authorization
 
-    res.status(201).send(tokenData)
+    const { token } = jwt.untype(authorization)
+
+    const { id, username } = jwt.decode(token)
+
+    Promise.resolve()
+        .then(() => generateTokens(id, username))
+
+        // utilizar `res.status(200).send` diretamente
+        // na função causa um erro.
+        .then(body => res.status(200).send(body))
+    ;
 }
 
 module.exports = {
     register,
-    login
+    login,
+    refresh
 }
