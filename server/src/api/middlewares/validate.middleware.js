@@ -3,8 +3,8 @@ const validators = require("../validators")
 const errors = require("../errors");
 
 const { handlePromise } = errors.APIError
-const { validateEmail, validatePassword } = validators.user
-const { emailInvalid, passwordIncorrect, authorizationInvalid, tokenInvalid, emailAlreadyExist } = errors.auth
+const { validateEmail, validatePasswordIsCorrect, validatePasswordLength } = validators.user
+const { emailInvalid, passwordIncorrect, authorizationInvalid, tokenInvalid, emailAlreadyExist, passwordLength } = errors.auth
 const { validateAuthorizationHeader } = validators.header
 
 const userValidateRefreshToken = validators.user.validateRefreshToken
@@ -36,7 +36,7 @@ function not(bool) {
         .then(() => validateEmail(email))
         .then(throwErr(emailInvalid))
 
-        .then(() => validatePassword(password, { email }))
+        .then(() => validatePasswordIsCorrect(password, { email }))
         .then(throwErr(passwordIncorrect))
         
         .then(next)
@@ -71,7 +71,7 @@ async function validateRefreshToken(req, res, next) {
  * @param {Express.NextFunction} next 
  */
 async function validateRegister(req, res, next) {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     // TODO: validate fields
 
@@ -79,6 +79,9 @@ async function validateRegister(req, res, next) {
         .then(() => validateEmail(email))
         .then(not)
         .then(throwErr(emailAlreadyExist))
+
+        .then(() => validatePasswordLength(password))
+        .then(throwErr(passwordLength))
 
         .then(next)
         .catch(handlePromise(res))

@@ -31,7 +31,7 @@ async function validateEmail(email) {
  * @param {Partial<{email: string, id: string}>} object
  * @returns {Promise<boolean>}
  */
-async function validatePassword(password, {email, id}) {
+async function validatePasswordIsCorrect(password, {email, id}) {
     const userRepo = TypeORM.getRepository(models.User)
 
     /** @type {TypeORM.FindOneOptions} */
@@ -45,6 +45,21 @@ async function validatePassword(password, {email, id}) {
         .then(user =>
             bcrypt.compare(password, user.password)
         )
+}
+
+/**
+ * Verifica se o password tem no mínimo 8
+ * e no máximo 60 caracteres.
+ * @param {string} password 
+ * @returns {Promise<boolean>}
+ */
+async function validatePasswordLength(password) {
+    if(
+        password.length < 8 ||
+        password.length > 60
+    ) return false
+
+    return true
 }
 
 /**
@@ -94,7 +109,8 @@ async function validateRefreshToken(refreshToken) {
 
 module.exports = {
     validateEmail,
-    validatePassword,
+    validatePasswordIsCorrect,
     validateAccessToken,
-    validateRefreshToken
+    validateRefreshToken,
+    validatePasswordLength
 }
