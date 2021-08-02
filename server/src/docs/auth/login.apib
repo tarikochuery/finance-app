@@ -1,0 +1,60 @@
+## User login [POST /auth/login]
+
+Receber os tokens para a autenticação do usuário.
+
+Retorna os tokens de acesso e atualização, e seus tempos de expiração
+em segundos.
+
++ Request default (application/json)
+
+    + Attributes (object)
+
+        + email: someone@home.com (string, required) - User email
+        + password: Somebody (string, required) - User password
+
+    + Body
+
+            {
+                "email": "someone@home.com",
+                "password": "Somebody"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "access_token": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhkZjAzZjkxLTkxY2QtNDcyNy1iYThlLTQzZWJjMTZhYzBlMCIsInVzZXJuYW1lIjoiU29tZW9uZSIsImFjY2Vzc190b2tlbiI6dHJ1ZSwiaWF0IjoxNjI3MjYyMzY1LCJleHAiOjE2MjcyNjQxNjV9.tXTSvY88SaK6PWvR7ezxFu097MjGioZLwCu5CdaRdxY",
+                    "expires_in": 1800 // Tempo em segundos
+                },
+                "refresh_token": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhkZjAzZjkxLTkxY2QtNDcyNy1iYThlLTQzZWJjMTZhYzBlMCIsInVzZXJuYW1lIjoiU29tZW9uZSIsImFjY2Vzc190b2tlbiI6ZmFsc2UsImlhdCI6MTYyNzI2MjM2NSwiZXhwIjoxNjI3ODY3MTY1fQ.WDSj8nEwwfSXmqJYR0E1fWw-Z0rktZRy79ai0hR0EvI",
+                    "expires_in": 604800 // Tempo em segundos
+                },
+                "token_type": "Bearer"
+            }
+
++ Response 400 (application/json)
+
+    Esse erro ocorrerá caso o email informado não
+    tenha sido encontrado na base de dados.
+
+    + Body
+
+            {
+                error: "invalid_email",
+                error_description: "O email é inválido ou não existe."
+            }
+
++ Response 400 (application/json)
+
+    Esse erro ocorrerá caso a senha informada não
+    coincida com a mesma cadastrada na base de dados.
+
+    + Body
+
+            {
+                error: "invalid_password",
+                error_description: "A senha está incorreta."
+            }

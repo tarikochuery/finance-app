@@ -1,5 +1,15 @@
 require("reflect-metadata");
-require("./config/typeorm");
-const app = require("./config/express");
+const Database = require("./config/typeorm");
+const Documentation = require("./config/aglio");
+const Server = require("./config/express");
 
-app.listen(3000, () => console.log("Going on 3000"))
+Promise.resolve()
+    .then(Documentation.generate)
+    .then(Database.start)
+    .then(Server.start)
+
+    .catch(err => {
+        console.error("\nOcorreu um erro ao iniciar o servidor")
+        console.error(err)
+    })
+;

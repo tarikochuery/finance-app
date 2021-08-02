@@ -1,0 +1,59 @@
+## Refresh token [GET /auth/refresh]
+
+Atualizar o token de acesso utilizando o token de atualização.
+
+Recebe o *header* `authorization` com o tipo do token (por padrão `Bearer`)
+seguido do refresh token em si.
+
+Retorna novos tokens de acesso e atualização.
+
++ Request default
+
+    + Headers
+
+            Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjhkZjAzZjkxLTkxY2QtNDcyNy1iYThlLTQzZWJjMTZhYzBlMCIsInVzZXJuYW1lIjoiU29tZW9uZSIsImFjY2Vzc190b2tlbiI6ZmFsc2UsImlhdCI6MTYyNzI2MjM2NSwiZXhwIjoxNjI3ODY3MTY1fQ.WDSj8nEwwfSXmqJYR0E1fWw-Z0rktZRy79ai0hR0EvI
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "access_token": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdG9rZW4iOnRydWUsImlhdCI6MTYyNzI2MjgyNSwiZXhwIjoxNjI3MjY0NjI1fQ.maH0evptnmwIxSr7zui2SQzjiaU6hxhq5cNXgII4vk4",
+                    "expires_in": 1800 // Tempo em segundos
+                },
+                "refresh_token": {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NfdG9rZW4iOmZhbHNlLCJpYXQiOjE2MjcyNjI4MjUsImV4cCI6MTYyNzg2NzYyNX0.G7BfRCXbpxaOtmvCsDyRsht2NieWeO4-DT1alryKllc",
+                    "expires_in": 604800 // Tempo em segundos
+                },
+                "token_type": "Bearer"
+            }
+
++ Response 400 (application/json)
+
+    Esse erro ocorrerá caso o header `authorization` não
+    tenha sido encontrado na requisição, ou o mesmo está
+    errado.
+
+    *obs: o tipo do header **deve** ser `Bearer`*
+
+    + Body
+
+            {
+                error: "invalid_header",
+                error_description: "O header 'Authorization' não foi encontrado ou é inválido."
+            }
+
++ Response 400 (application/json)
+
+    Esse erro ocorrerá caso o token de atualização enviado
+    no header seja inválido ou já tenha sido expirado.
+
+    *obs: o token **deve** ser um refresh token*
+
+    + Body
+
+            {
+                error: "invalid_token",
+                error_description: "O token é inválido ou expirou."
+            }

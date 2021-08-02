@@ -1,0 +1,62 @@
+## Register user [POST /auth/register]
+
+Cadastrar novos usuários à base de dados.
+
+Retornará o `id` de usuário, junto com a data de criação da conta.
+
+### Quantidades limite de caracteres
+- `"username"`: mínima de 1 e máxima de 32
+- `"email"`: máxima de 128
+- `"password"`: mínima de 8 e máxima de 60
+
++ Request default (application/json)
+
+    + Attributes (object)
+
+        + username: Someone (string, required)
+        + email: someone@home.com (string, required)
+        + password: Somebody (string, required)
+
+    + Body
+
+            {
+                "username": "Someone",
+                "email": "someone@home.com",
+                "password": "Somebody"
+            }
+
++ Response 201 (application/json)
+
+    + Body
+
+            {
+                "id": "8df03f91-91cd-4727-ba8e-43ebc16ac0e0",
+                "username": "Someone",
+                "email": "someone@home.com",
+                "created_at": "2021-07-26T01:09:55.126Z",
+                "updated_at": "2021-07-26T01:09:55.126Z"
+            }
+
++ Response 409 (application/json)
+
+    Esse erro ocorrerá caso o email informado já esteja
+    cadastrado na base de dados.
+
+    + Body
+
+            {
+                error: "email_already_exist",
+                error_description: "O email já existe."
+            }
+
++ Response 400 (application/json)
+
+    Esse erro ocorrerá caso a senha não esteja dentro
+    dos limites de caracteres permitido.
+
+    + Body
+
+            {
+                error: "password_length",
+                error_description: "A senha deve ter no mínimo 8 e no máximo 60 caracteres."
+            }
