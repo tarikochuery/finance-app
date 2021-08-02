@@ -14,5 +14,7 @@ const models = require("../database/models");
 //         models.User
 //     ]
 // })
-TypeORM.createConnection()
-.catch(console.error)
+
+module.exports = {
+    start: () => TypeORM.createConnection()
+}

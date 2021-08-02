@@ -4,6 +4,7 @@
    "main": "src/index.js",
    "license": "Apache-2.0",
    "dependencies": {
+      "aglio": "https://github.com/Gasol/aglio.git",
       "bcrypt": "^5.0.1",
       "cors": "^2.8.5",
       "express": "^4.17.1",
